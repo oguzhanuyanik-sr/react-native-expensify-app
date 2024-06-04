@@ -6,9 +6,15 @@ import { items } from '../constants/places';
 import randomImage from '../assets/images/randomImage';
 import EmptyList from '../components/emptyList';
 import { useNavigation } from '@react-navigation/native';
+import { signOut } from 'firebase/auth';
+import { auth } from '../config/firebase';
 
 export default function HomeScreen() {
   const navigation = useNavigation();
+
+  const handleLogout = async () => {
+    await signOut(auth);
+  };
 
   return (
     <ScreenWrapper className='flex-1 bg-slate-400'>
@@ -17,7 +23,10 @@ export default function HomeScreen() {
           Expensify
         </Text>
 
-        <TouchableOpacity className='p-2 px-3 bg-white border border-gray-200 rounded-full'>
+        <TouchableOpacity
+          onPress={handleLogout}
+          className='p-2 px-3 bg-white border border-gray-200 rounded-full'
+        >
           <Text className={colors.heading}>Logout</Text>
         </TouchableOpacity>
       </View>

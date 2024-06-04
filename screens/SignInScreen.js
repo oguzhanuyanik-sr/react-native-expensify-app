@@ -11,17 +11,34 @@ import ScreenWrapper from '../components/screenWrapper';
 import { colors } from '../theme';
 import BackButton from '../components/backButton';
 import { useNavigation } from '@react-navigation/native';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../config/firebase';
+import { useDispatch, useSelector } from 'react-redux';
+import Loading from '../components/loading';
+import { setUserLoading } from '../redux/slices/user';
 
 export default function SignInScreen() {
   const navigation = useNavigation();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { userLoading } = useSelector((state) => state.user);
 
-  const handleSubmit = () => {
+  const dispatch = useDispatch();
+
+  const handleSubmit = async () => {
     if (email && password) {
-      navigation.navigate('Home');
+      // navigation.navigate('Home');
+
+      try {
+        dispatch(setUserLoading(true));
+        await signInWithEmailAndPassword(auth, email, password);
+        dispatch(setUserLoading(false));
+      } catch (e) {
+        Alert.alert(e.message);
+      }
     } else {
+      dispatch(setUserLoading(false));
       Alert.alert('Please fill the inputs!');
     }
   };
@@ -73,15 +90,19 @@ export default function SignInScreen() {
         </View>
 
         <View className=''>
-          <TouchableOpacity
-            onPress={handleSubmit}
-            style={{ backgroundColor: colors.button }}
-            className='my-6 rounded-full p-3 shadow-sm mx-2 fixed bottom-10'
-          >
-            <Text className='text-center text-white text-lg font-bold'>
-              Sign In
-            </Text>
-          </TouchableOpacity>
+          {userLoading ? (
+            <Loading />
+          ) : (
+            <TouchableOpacity
+              onPress={handleSubmit}
+              style={{ backgroundColor: colors.button }}
+              className='my-6 rounded-full p-3 shadow-sm mx-2 fixed bottom-10'
+            >
+              <Text className='text-center text-white text-lg font-bold'>
+                Sign In
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </ScreenWrapper>
