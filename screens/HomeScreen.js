@@ -4,6 +4,7 @@ import ScreenWrapper from '../components/screenWrapper';
 import { colors } from '../theme';
 import { items } from '../constants/places';
 import randomImage from '../assets/images/randomImage';
+import EmptyList from '../components/emptyList';
 
 export default function HomeScreen() {
   return (
@@ -46,6 +47,9 @@ export default function HomeScreen() {
               justifyContent: 'space-between',
             }}
             data={items}
+            ListEmptyComponent={
+              <EmptyList message={"You haven't recorded any trips yet"} />
+            }
             keyExtractor={(item) => item.id}
             showsVerticalScrollIndicator={false}
             className='mx-0'
