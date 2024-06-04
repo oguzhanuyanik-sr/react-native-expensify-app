@@ -34,9 +34,10 @@ export default function HomeScreen() {
           <Text className={`${colors.heading} font-bold text-xl`}>
             Recent Trips
           </Text>
-          <TouchableOpacity 
-          onPress={() => navigation.navigate('AddTrip')}
-          className='p-2 px-3 bg-white border border-gray-200 rounded-full'>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('AddTrip')}
+            className='p-2 px-3 bg-white border border-gray-200 rounded-full'
+          >
             <Text className={colors.heading}>Add Trip</Text>
           </TouchableOpacity>
         </View>
@@ -60,7 +61,14 @@ export default function HomeScreen() {
             className='mx-0'
             renderItem={({ item }) => {
               return (
-                <TouchableOpacity className='bg-white p-3 rounded-2xl mb-3 shadow-sm'>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('TripExpenses', {
+                      ...item,
+                    })
+                  }
+                  className='bg-white p-3 rounded-2xl mb-3 shadow-sm'
+                >
                   <View>
                     <Image source={randomImage()} className='w-36 h-36 mb-2' />
                     <Text className={`${colors.heading} font-bold`}>

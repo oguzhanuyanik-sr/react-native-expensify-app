@@ -10,9 +10,9 @@ export default function BackButton() {
   return (
     <TouchableOpacity
       onPress={() => navigation.goBack()}
-      className={`bg-gray-700 rounded-full p-2`}
+      className={`rounded-full p-3 mt-2 border-gray-700 border`}
     >
-      <ChevronLeftIcon size={20} color='#fff' />
+      <ChevronLeftIcon size={30} color='#374151' />
     </TouchableOpacity>
   );
 }
