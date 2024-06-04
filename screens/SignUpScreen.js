@@ -11,6 +11,9 @@ import ScreenWrapper from '../components/screenWrapper';
 import { colors } from '../theme';
 import BackButton from '../components/backButton';
 import { useNavigation } from '@react-navigation/native';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import {auth} from '../config/firebase'
+
 
 export default function SignUpScreen() {
   const navigation = useNavigation();
@@ -18,9 +21,11 @@ export default function SignUpScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (email && password) {
-      navigation.navigate('Home');
+      // navigation.navigate('Home');
+
+      await createUserWithEmailAndPassword(auth, email, password);
     } else {
       Alert.alert('Please fill the inputs!');
     }
